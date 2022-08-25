@@ -42,37 +42,55 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  AppBar _buildAppBar() {
-    return AppBar(
-      title: Text(widget.title),
-      centerTitle: false,
+  PreferredSize _buildAppBar(String title) {
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(100.0),
+      child: AppBar(
+        automaticallyImplyLeading: true, // hides leading widget
+        flexibleSpace: Text(
+          title,
+          style: const TextStyle(color: Colors.white, fontSize: 30.0),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBody() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            '$_counter',
+            style: const TextStyle(color: Colors.black, fontSize: 40.0),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _incrementCounter();
+              const snackBar = SnackBar(
+                content: Text('answer to life the universe and everything'),
+              );
+              if (_counter == 42) {
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+            ),
+            child: const Text("Add"),
+          )
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline3,
-            ),
-            ElevatedButton(
-              onPressed: _incrementCounter,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-              child: const Text("Add"),
-            )
-          ],
-        ),
-      ),
+      appBar: _buildAppBar(widget.title),
+      body: _buildBody(),
     );
   }
 }
