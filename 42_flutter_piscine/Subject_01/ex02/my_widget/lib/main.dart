@@ -22,15 +22,13 @@ class _RandomWordsState extends State<RandomWords> {
     return ListView.builder(
         padding: const EdgeInsets.all(16.0),
         itemBuilder: (context, i) {
-          if (i.isOdd) return const Divider();
-          final index = i ~/ 2;
-          if (index >= _suggestions.length) {
+          if (i >= _suggestions.length) {
             _suggestions.addAll(generateWordPairs().take(10));
           }
           return Card(
             child: ListTile(
               title: Text(
-                _suggestions[index].asPascalCase,
+                _suggestions[i].asPascalCase,
                 style: _biggerFont,
               ),
               subtitle: Text(Random().nextInt(2) == 0 ? "done" : "not yet"),
